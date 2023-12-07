@@ -1,0 +1,24 @@
+version: '3'
+services:
+  db:
+    image: mysql
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+    - "9906:3306"
+    volumes:
+    - $HOME/mysql2021:/var/www/html
+    - $HOME/sql2022/:/app
+  web:
+    image: php:7.4-apache
+    container_name: web
+    depends_on:
+    - db
+    volumes:
+    - $HOME/php:/var/www/html
+    ports:
+    - "8100:80"
